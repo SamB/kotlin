@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.startOffset
 import org.jetbrains.kotlin.utils.addToStdlib.safeAs
 
-class AddSemicolonBeforeLambdaExpressionFix(element: KtExpression) : KotlinQuickFixAction<KtExpression>(element) {
+class AddSemicolonBeforeLambdaExpressionFix(element: KtLambdaExpression) : KotlinQuickFixAction<KtLambdaExpression>(element) {
     override fun getText(): String = "Terminate preceding call with semicolon"
     override fun getFamilyName(): String = text
 

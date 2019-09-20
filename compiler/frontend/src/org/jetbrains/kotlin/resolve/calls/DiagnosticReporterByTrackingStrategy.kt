@@ -173,14 +173,16 @@ class DiagnosticReporterByTrackingStrategy(
         if (element != null) report(element)
     }
 
-    private fun reportTrailingLambdaOnNewLineErrorOrElse(expression: KtExpression?, report: (KtExpression) -> Unit) =
-        reportIfNonNull(expression) { expr ->
-            if (expr.isTrailingLambdaOnNewLIne) {
-                trace.report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on(expr))
-            } else {
-                report(expr)
-            }
+    private inline fun reportTrailingLambdaOnNewLineErrorOrElse(
+        expression: KtExpression?,
+        crossinline report: (KtExpression) -> Unit
+    ) = reportIfNonNull(expression) { expr ->
+        if (expr.isTrailingLambdaOnNewLIne) {
+            trace.report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on(expr as KtLambdaExpression))
+        } else {
+            report(expr)
         }
+    }
 
     override fun onCallArgumentName(callArgument: KotlinCallArgument, diagnostic: KotlinCallDiagnostic) {
         val nameReference = callArgument.psiCallArgument.valueArgument.getArgumentName()?.referenceExpression ?: return

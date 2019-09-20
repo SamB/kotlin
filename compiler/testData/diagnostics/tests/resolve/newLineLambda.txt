@@ -1,5 +1,6 @@
 package
 
+public fun f1(): (() -> kotlin.Unit) -> (() -> kotlin.Unit) -> kotlin.Unit
 public fun noArgs(): kotlin.Unit
 public fun oneLambdaArg(/*0*/ fn: () -> kotlin.Unit): kotlin.Unit
 public fun testLambdaArg(): kotlin.Unit

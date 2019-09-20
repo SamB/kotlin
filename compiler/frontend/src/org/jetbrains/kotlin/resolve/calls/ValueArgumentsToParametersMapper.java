@@ -296,7 +296,6 @@ public class ValueArgumentsToParametersMapper {
                     reportTrailingLambdaOnNewLineErrorOrElse(possiblyLabeledFunctionLiteral, lambdaExpression -> {
                         report(TOO_MANY_ARGUMENTS.on(lambdaExpression, candidateCall.getCandidateDescriptor()));
                     });
-
                     setStatus(WEAK_ERROR);
                 }
                 else {
@@ -308,7 +307,7 @@ public class ValueArgumentsToParametersMapper {
                 KtExpression argument = functionLiteralArguments.get(i).getArgumentExpression();
                 report(MANY_LAMBDA_EXPRESSION_ARGUMENTS.on(argument));
                 if (CallUtilKt.isTrailingLambdaOnNewLIne(argument)) {
-                    report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on(argument));
+                    report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on((KtLambdaExpression) argument));
                 }
                 setStatus(WEAK_ERROR);
             }
@@ -316,7 +315,7 @@ public class ValueArgumentsToParametersMapper {
 
         private void reportTrailingLambdaOnNewLineErrorOrElse(KtExpression lambdaExpression, Consumer<KtExpression> originalReporter) {
             if (CallUtilKt.isTrailingLambdaOnNewLIne(lambdaExpression)) {
-                report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on(lambdaExpression));
+                report(UNEXPECTED_TRAILING_LAMBDA_ON_A_NEW_LINE.on((KtLambdaExpression) lambdaExpression));
             } else {
                 originalReporter.accept(lambdaExpression);
             }
